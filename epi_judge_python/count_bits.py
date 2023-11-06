@@ -1,6 +1,7 @@
 from test_framework import generic_test
 
 
+# O(n)
 def count_bits_brute(x: int) -> int:
     num_bits = 0
     while x:
@@ -9,6 +10,7 @@ def count_bits_brute(x: int) -> int:
     return num_bits
 
 
+# O(k), where k is is the number of bits set to 1
 def count_bits_drop(x: int) -> int:
     num_bits = 0
     while x:
