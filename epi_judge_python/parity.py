@@ -1,5 +1,5 @@
 from test_framework import generic_test
-
+from math import log2
 
 # O(n)
 def parity_brute(x: int) -> int:
@@ -61,3 +61,29 @@ if __name__ == '__main__':
     generic_test.generic_test_main('parity.py', 'parity.tsv', parity_precompute)
     print("XOR against self:")
     exit(generic_test.generic_test_main('parity.py', 'parity.tsv', parity_assoc))
+
+
+def show_binary_comparison(func):
+    def wrapped(*args) -> int:
+        x, *_ = args
+        x_bin = bin(x)
+        ans = func(*args)
+        ans_bin = bin(ans)
+        print(f"{func.__name__}({str(args).strip('(),')}) = {ans}")
+        print(f"bin({x}) = {x_bin}; bin({ans}) = {ans_bin}")
+        return ans
+    return wrapped
+
+
+def isolate_lowest_set_bit(x: int) -> int:
+    return x & ~(x - 1)
+
+@show_binary_comparison
+def propagate_rightmost_set(x: int) -> int:
+    left_shift = int(log2(isolate_lowest_set_bit(x)))
+    return x | ((1 << left_shift) - 1)
+
+@show_binary_comparison
+def modulo_pow2(x: int, pow2: int) -> int:
+    # note pow2 is the integer exponent, so e.g. if pow2 = 4, then this computes mod 16
+    return (x & ((1 << pow2) - 1))
