@@ -4,9 +4,9 @@ from test_framework import generic_test
 def parity(x: int) -> int:
     result = 0
     while x:
-        result ^= x & 1
-        x >>= 1
-    return result
+        result ^= 1
+        x &= x - 1  # drop the lowest set bit of x
+    return result   # this has time complexity O(k), where k is is the number of bits set to 1
 
 
 if __name__ == '__main__':
