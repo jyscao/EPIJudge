@@ -87,3 +87,6 @@ def propagate_rightmost_set(x: int) -> int:
 def modulo_pow2(x: int, pow2: int) -> int:
     # note pow2 is the integer exponent, so e.g. if pow2 = 4, then this computes mod 16
     return (x & ((1 << pow2) - 1))
+
+def is_pow_of_2(x: int) -> bool:
+    return x & ~(x - 1) == x
