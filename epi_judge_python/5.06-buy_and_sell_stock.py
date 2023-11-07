@@ -17,3 +17,14 @@ if __name__ == '__main__':
         generic_test.generic_test_main('buy_and_sell_stock.py',
                                        'buy_and_sell_stock.tsv',
                                        buy_and_sell_stock_once))
+
+
+def longest_subarray(ints: List[int]) -> int:
+    curr_elem, curr_len, max_len = ints[0], 0, 0
+    for i in ints:
+        if i == curr_elem:
+            curr_len += 1
+        else:
+            curr_elem, curr_len = i, 1
+        max_len = max(max_len, curr_len)
+    return max_len
