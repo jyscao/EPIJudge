@@ -7,8 +7,26 @@ from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
 
+def is_even(x):
+    return x % 2 == 0
+def is_odd(x):
+    return x % 2 == 1
+
 def even_odd(A: List[int]) -> None:
-    # TODO - you fill in here.
+    n = len(A)
+    i, j = 0, -1
+    while i <= j % n:
+        if is_even(A[i]):
+            i += 1
+        else:
+            while abs(j) < n and is_odd(A[j]):
+                j -= 1
+            else:
+                if i >= j % n:
+                    break
+                A[i], A[j] = A[j], A[i]
+                i += 1
+                j -= 1
     return
 
 
