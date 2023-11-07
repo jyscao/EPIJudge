@@ -4,8 +4,8 @@ from list_node import ListNode
 from test_framework import generic_test
 
 
-def merge_two_sorted_lists(L1: Optional[ListNode],
-                           L2: Optional[ListNode]) -> Optional[ListNode]:
+def merge_two_sorted_lists_self(L1: Optional[ListNode],
+                                L2: Optional[ListNode]) -> Optional[ListNode]:
     if L1 is None:
         return L2
     elif L2 is None:
@@ -31,9 +31,28 @@ def merge_two_sorted_lists(L1: Optional[ListNode],
     return head
 
 
+def merge_two_sorted_lists_book(L1: Optional[ListNode],
+                                L2: Optional[ListNode]) -> Optional[ListNode]:
+
+    # NOTE: this is also known as a "sentinel"; its use allows us to avoid
+    # initializing the current working list to one of L1 and L2, and go
+    # straight into the loop that compares their values and follows them
+    dummy_head = tail = ListNode()
+
+    while L1 and L2:
+        if L1.data <= L2.data:
+            tail.next, L1 = L1, L1.next
+        else:
+            tail.next, L2 = L2, L2.next
+        tail = tail.next
+
+    tail.next = L1 or L2
+    return dummy_head.next
+
 
 if __name__ == '__main__':
     exit(
         generic_test.generic_test_main('sorted_lists_merge.py',
                                        'sorted_lists_merge.tsv',
-                                       merge_two_sorted_lists))
+                                       # merge_two_sorted_lists_self))
+                                       merge_two_sorted_lists_book))
