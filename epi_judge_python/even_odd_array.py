@@ -12,7 +12,7 @@ def is_even(x):
 def is_odd(x):
     return x % 2 == 1
 
-def even_odd(A: List[int]) -> None:
+def even_odd_self(A: List[int]) -> None:
     n = len(A)
     i, j = 0, -1
     while i <= j % n:
@@ -27,14 +27,29 @@ def even_odd(A: List[int]) -> None:
                 A[i], A[j] = A[j], A[i]
                 i += 1
                 j -= 1
-    return
+
+
+# NOTE: the key difference b/w the book vs. our soln is that the book's soln
+# doesn't care to avoid swapping an odd at the beginning w/ another odd near
+# the end; as such swaps will decrement the end-odd pointer anyway, so
+# eventually an even near the end will be reached and get swapped with the
+# same-indexed odd number near the beginning
+def even_odd_book(A: List[int]) -> None:
+    next_even, next_odd = 0, len(A) - 1
+    while next_even < next_odd:
+        if A[next_even] % 2 == 0:
+            next_even += 1
+        else:
+            A[next_even], A[next_odd] = A[next_odd], A[next_even]
+            next_odd -= 1
 
 
 @enable_executor_hook
 def even_odd_wrapper(executor, A):
     before = collections.Counter(A)
 
-    executor.run(functools.partial(even_odd, A))
+    # executor.run(functools.partial(even_odd_self, A))
+    executor.run(functools.partial(even_odd_book, A))
 
     in_odd = False
     for a in A:
