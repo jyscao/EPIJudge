@@ -56,3 +56,20 @@ if __name__ == '__main__':
                                        'sorted_lists_merge.tsv',
                                        # merge_two_sorted_lists_self))
                                        merge_two_sorted_lists_book))
+
+
+from doubly_list_node import DoublyListNode
+def sorted_doubly_linked_lists_merge(L1: Optional[DoublyListNode],
+                                     L2: Optional[DoublyListNode],
+                                     ) -> Optional[DoublyListNode]:
+    dummy_head = tail = DoublyListNode()
+
+    while L1 and L2:
+        if L1.data <= L2.data:
+            tail.next, L1.prev, L1 = L1, tail, L1.next
+        else:
+            tail.next, L2.prev, L2 = L2, tail, L2.next
+        tail = tail.next
+
+    tail.next = L1 or L2
+    return dummy_head.next
