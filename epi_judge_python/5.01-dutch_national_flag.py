@@ -8,7 +8,7 @@ from test_framework.test_utils import enable_executor_hook
 RED, WHITE, BLUE = range(3)
 
 
-def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
+def dutch_flag_partition_2pass(pivot_index: int, A: List[int]) -> None:
     pivot = A[pivot_index]
     a_idx = 0
     for i in range(len(A)):
@@ -22,6 +22,22 @@ def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
             b_idx -= 1
 
 
+def dutch_flag_partition_1pass(pivot_index: int, A: List[int]) -> None:
+    pivot = A[pivot_index]
+    a, b, c = 0, 0, len(A)
+    while b < c:
+        unclassified = A[b]
+        if unclassified < pivot:
+            A[a], A[b] = A[b], A[a]
+            a += 1
+            b += 1
+        elif unclassified == pivot:
+            b += 1
+        else:
+            c -= 1
+            A[b], A[c] = A[c], A[b]
+
+
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):
     count = [0, 0, 0]
@@ -29,7 +45,8 @@ def dutch_flag_partition_wrapper(executor, A, pivot_idx):
         count[x] += 1
     pivot = A[pivot_idx]
 
-    executor.run(functools.partial(dutch_flag_partition, pivot_idx, A))
+    # executor.run(functools.partial(dutch_flag_partition_2pass, pivot_idx, A))
+    executor.run(functools.partial(dutch_flag_partition_1pass, pivot_idx, A))
 
     i = 0
     while i < len(A) and A[i] < pivot:
