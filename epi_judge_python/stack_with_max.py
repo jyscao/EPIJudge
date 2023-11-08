@@ -1,23 +1,30 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
+from typing import Optional
 
 class Stack:
+    def __init__(self):
+        self._stack = []
+
     def empty(self) -> bool:
-        # TODO - you fill in here.
-        return True
+        return len(self._stack) == 0
 
     def max(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        _, curr_max = self._stack[-1]
+        return curr_max
 
-    def pop(self) -> int:
-        # TODO - you fill in here.
-        return 0
+    def pop(self) -> Optional[int]:
+        if not self.empty():
+            elem, _ = self._stack.pop()
+            return elem
+        return None
 
     def push(self, x: int) -> None:
-        # TODO - you fill in here.
-        return
+        self._stack.append((
+            x,
+            max(self.max(), x) if not self.empty() else x,
+        ))
 
 
 def stack_tester(ops):
