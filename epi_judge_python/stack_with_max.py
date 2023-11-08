@@ -27,13 +27,44 @@ class Stack:
         ))
 
 
+class StackLowMem:
+    def __init__(self):
+        self._stack = []
+        self._max_tups = []
+
+    def empty(self) -> bool:
+        return len(self._stack) == 0
+
+    def max(self) -> int:
+        return self._max_tups[-1][0]
+
+    def pop(self) -> Optional[int]:
+        if self.empty():
+            return None
+
+        self._max_tups[-1][1] -= 1
+        if self._max_tups[-1][1] == 0:
+            self._max_tups.pop()
+
+        return self._stack.pop()
+
+    def push(self, x: int) -> None:
+        if (self.empty() and not self._max_tups) or (x > self._max_tups[-1][0]):
+            self._max_tups.append([x, 1,])
+        else:
+            self._max_tups[-1][1] += 1
+        self._stack.append(x)
+
+
 def stack_tester(ops):
     try:
-        s = Stack()
+        # s = Stack()
+        s = StackLowMem()
 
         for (op, arg) in ops:
             if op == 'Stack':
-                s = Stack()
+                # s = Stack()
+                s = StackLowMem()
             elif op == 'push':
                 s.push(arg)
             elif op == 'pop':
