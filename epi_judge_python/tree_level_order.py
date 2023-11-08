@@ -43,3 +43,21 @@ if __name__ == '__main__':
                                        'tree_level_order.tsv',
                                        binary_tree_depth_order))
                                        # binary_tree_depth_order_book))
+
+
+def binary_tree_depth_avg(tree: BinaryTreeNode) -> List[float]:
+    if not tree:
+        return []
+
+    result = []
+    curr_level_nodes, next_level_nodes = [tree], []
+    while curr_level_nodes:
+        result.append(sum(node.data for node in curr_level_nodes) / len(curr_level_nodes))
+        for node in curr_level_nodes:
+            if node.left:
+                next_level_nodes.append(node.left)
+            if node.right:
+                next_level_nodes.append(node.right)
+        curr_level_nodes, next_level_nodes = next_level_nodes, []
+
+    return result
