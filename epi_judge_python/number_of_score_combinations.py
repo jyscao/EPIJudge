@@ -7,7 +7,6 @@ import numpy as np
 
 def num_combinations_for_final_score(final_score: int,
                                      individual_play_scores: List[int]) -> int:
-# def num_combinations_for_final_score(final_score, individual_play_scores):
     # individual_play_scores.sort()     # NOTE: sorting is not needed
     scores_combo = np.zeros((len(individual_play_scores), final_score + 1,), dtype=int)
     for p in range(len(individual_play_scores)):
@@ -22,8 +21,20 @@ def num_combinations_for_final_score(final_score: int,
     return scores_combo[-1, -1]
 
 
+def num_combinations_for_final_score_1d_cache(final_score, individual_play_scores):
+    scores_cache = [1] + [0 for _ in range(final_score)]
+    for p in range(len(individual_play_scores)):
+        play_score = individual_play_scores[p]
+        for s in range(1, final_score + 1):
+            without_play = scores_cache[s] if p >= 1 else 0
+            with_play = scores_cache[s - play_score] if s >= play_score else 0
+            scores_cache[s] = without_play + with_play
+    return scores_cache[-1]
+
+
 if __name__ == '__main__':
     exit(
         generic_test.generic_test_main('number_of_score_combinations.py',
                                        'number_of_score_combinations.tsv',
-                                       num_combinations_for_final_score))
+                                       # num_combinations_for_final_score))
+                                       num_combinations_for_final_score_1d_cache))
