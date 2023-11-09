@@ -1010,7 +1010,7 @@ problem_mapping = {
                 "total": 3852
             },
             "Python: is_tree_balanced.py": {
-                "passed": 0,
+                "passed": 3852,
                 "total": 3852
             }
         },
@@ -1222,7 +1222,7 @@ problem_mapping = {
                 "total": 152
             },
             "Python: sorted_arrays_merge.py": {
-                "passed": 0,
+                "passed": 152,
                 "total": 152
             }
         },
@@ -2156,7 +2156,7 @@ problem_mapping = {
                 "total": 1003
             },
             "Python: number_of_score_combinations.py": {
-                "passed": 0,
+                "passed": 1003,
                 "total": 1003
             }
         },
