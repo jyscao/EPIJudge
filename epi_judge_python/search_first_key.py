@@ -67,10 +67,25 @@ def search_first_gt_k(A: List[int], k: int) -> int:
 
     return ans if ans < len(A) else -1
 
+def search_last_of_k(A, k):
+    left, right = 0, len(A) - 1
+    res = -1
 
-# def search_enclosure(A, k):
-def search_enclosure(A: List[int], k: int) -> Tuple[int, int]:
-    a = search_first_of_k(A, k)
-    candidate = search_first_gt_k(A, k) - 1
-    b = -1 if A[candidate] != k else candidate
-    return (a, b)
+    while left <= right:
+        mid = (left + right) // 2
+        if A[mid] > k:
+            right = mid - 1
+        elif A[mid] == k:
+            res = mid
+            left = mid + 1
+        elif A[mid] < k:
+            left = mid + 1
+        else:
+            raise Exception("this should never be reached")
+
+    return res
+
+
+# def search_enclosure(A: List[int], k: int) -> Tuple[int, int]:
+def search_enclosure(A, k):
+    return search_first_of_k(A, k), search_last_of_k(A, k)
