@@ -50,3 +50,23 @@ if __name__ == '__main__':
                                        'search_first_key.tsv',
                                        # search_first_of_k))
                                        search_first_of_k_book))
+
+
+
+def search_first_gt_k(A: List[int], k: int) -> int:
+    left, right = 0, len(A) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if A[mid] < k:
+            left = mid + 1
+        elif A[mid] == k:
+            left = mid + 1
+        elif A[mid] > k:
+            right = mid - 1
+        else:
+            raise Exception("this should never be reached")
+
+    ans = mid + (A[mid] <= k) 
+
+    return ans if ans < len(A) else -1
