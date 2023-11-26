@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from test_framework import generic_test
 
@@ -66,3 +66,11 @@ def search_first_gt_k(A: List[int], k: int) -> int:
     ans = mid + (A[mid] <= k) 
 
     return ans if ans < len(A) else -1
+
+
+# def search_enclosure(A, k):
+def search_enclosure(A: List[int], k: int) -> Tuple[int, int]:
+    a = search_first_of_k(A, k)
+    candidate = search_first_gt_k(A, k) - 1
+    b = -1 if A[candidate] != k else candidate
+    return (a, b)
