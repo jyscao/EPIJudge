@@ -2,7 +2,7 @@ from binary_tree_node import BinaryTreeNode
 from test_framework import generic_test
 
 
-def is_binary_tree_bst(tree: BinaryTreeNode) -> bool:
+def is_binary_tree_bst_book1(tree: BinaryTreeNode) -> bool:
     def keys_within_bounds(tree, lower, upper):
         if not tree:
             return True
@@ -16,7 +16,21 @@ def is_binary_tree_bst(tree: BinaryTreeNode) -> bool:
     return keys_within_bounds(tree, -float("inf"), float("inf"))
 
 
+def is_binary_tree_bst_book2(tree: BinaryTreeNode) -> bool:
+    if not tree:
+        return True
+
+    def get_data(tree):
+        left_vals  = get_data(tree.left)  if tree.left  else []
+        right_vals = get_data(tree.right) if tree.right else []
+
+        return left_vals + [tree.data] + right_vals
+    
+    in_order_vals = get_data(tree)
+    return in_order_vals == sorted(in_order_vals)
+
+
 if __name__ == '__main__':
     exit(
         generic_test.generic_test_main('is_tree_a_bst.py', 'is_tree_a_bst.tsv',
-                                       is_binary_tree_bst))
+                                       is_binary_tree_bst_book2))
